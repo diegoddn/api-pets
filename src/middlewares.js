@@ -7,26 +7,26 @@ try {
     if (!nome) {
         return res.status(400).json({
             ok: false,
-            messagem: "O campo nome é obrigatório"
+            messagem: "O campo nome não foi informado"
         });
     }
 
     if (!raca) {
         return res.status(400).json({
             ok: false,
-            messagem: "O campo raca é obrigatório"
+            messagem: "O campo raca não foi informado"
         });
     }
     if (!idade) {
         return res.status(400).json({
             ok: false,
-            messagem: "O campo idade é obrigatório"
+            messagem: "O campo idade não foi informado"
         });
     }
     if (!nomeTutor) {
         return res.status(400).json({
             ok: false,
-            messagem: "O campo nomeTutor é obrigatório"
+            messagem: "O campo nomeTutor não foi informado"
         });
     }
 
