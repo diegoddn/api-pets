@@ -4,9 +4,9 @@ export const pets = [
     {
         id: randomUUID(),
         nome: "Bidu",
-        raça: "Caramelo",
+        raça: "Vira-lata",
         idade: 6,
-        tutor: "Mateus"
+        nomeTutor: "Mateus"
     },
 
     {
@@ -14,6 +14,6 @@ export const pets = [
         nome: "Dudu",
         raça: "Chuau-chau",
         idade: 3,
-        tutor: "Maria"
+        nomeTutor: "Maria"
     }
 ]

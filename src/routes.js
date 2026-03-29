@@ -16,7 +16,7 @@ routes.get('/pets', (req, res) => {
         console.error(error);
             res.status(500).send({
             ok: false,
-            messagem: "Erro ao listar pets"
+            messagem: error.toString()
         })
     }
 })
@@ -25,14 +25,14 @@ routes.get('/pets', (req, res) => {
 routes.post('/pets', [validarPet], (req, res) => {
     try {
         // 1- Entrada de dados
-        const body = req.body;
+        const { nome, raca, idade, nomeTutor} = req.body;
 
         const novoPet = { 
             id: randomUUID(), 
-            nome: body.nome, 
-            raca: body.raca,
-            idade: body.idade,
-            tutor: body.tutor
+            nome, 
+            raca,
+            idade,
+            nomeTutor
         };
 
         // 2- Processamento
@@ -49,7 +49,7 @@ routes.post('/pets', [validarPet], (req, res) => {
         console.error(error);
             res.status(500).send({
             ok: false,
-            messagem: "Erro ao criar pet"
+            messagem: error.toString()
         })
     }
 })
@@ -57,16 +57,20 @@ routes.post('/pets', [validarPet], (req, res) => {
 // GET /pets/:id - Obter um pet por ID
 routes.get('/pets/:id', (req, res) => {
     try {
+        //1- entrada
         const { id } = req.params;
+
+        //2 - processamnento
         const pet = pets.find(p => p.id === id);
 
         if (!pet) {
-                res.status(404).send({
+            return res.status(404).send({
                 ok: false,
                 messagem: "Pet não encontrado"
             });
         }
 
+            //3- saida
             res.status(200).send({
             ok: true,
             messagem: "Pet obtido com sucesso",
@@ -76,7 +80,7 @@ routes.get('/pets/:id', (req, res) => {
         console.error(error);
             res.status(500).send({
             ok: false,
-            messagem: "Erro ao buscar pet"
+            messagem: error.toString()
         });
     }
 })
@@ -85,7 +89,7 @@ routes.get('/pets/:id', (req, res) => {
 routes.put('/pets/:id', [validarPet], (req, res) => {
     try {
         const { id } = req.params;
-        const {nome, raca, idade, tutor} = req.body;
+        const {nome, raca, idade, nomeTutor} = req.body;
 
         const pet = pets.find(p => p.id === id);
         if (!pet) {
@@ -98,7 +102,7 @@ routes.put('/pets/:id', [validarPet], (req, res) => {
         pet.nome = nome;
         pet.raca = raca;
         pet.idade = idade;
-        pet.tutor = tutor;
+        pet.nomeTutor = nomeTutor;
 
             res.status(200).send({
             ok: true,
@@ -110,7 +114,7 @@ routes.put('/pets/:id', [validarPet], (req, res) => {
         console.error(error);
         return res.status(500).send({
             ok: false,
-            messagem: "Erro ao atualizar pet"
+            messagem: error.toString()
         });
     }
 })
@@ -118,11 +122,15 @@ routes.put('/pets/:id', [validarPet], (req, res) => {
 // DELETE /pets/:id - Excluir um pet por ID
 routes.delete('/pets/:id', (req, res) => {
     try {
+
+        // 1- entrada
         const { id } = req.params;
+
+        //2 - processamento
         const petIndex = pets.findIndex(p => p.id === id);
 
         if (petIndex < 0) {
-                res.status(404).send({
+            return res.status(404).send({
                 ok: false,
                 messagem: "Pet não encontrado"
             });
@@ -130,15 +138,17 @@ routes.delete('/pets/:id', (req, res) => {
 
         pets.splice(petIndex, 1);
 
+        //3 - saida
             res.status(200).send({
             ok: true,
-            messagem: "Pet excluído com sucesso"
+            messagem: "Pet excluído com sucesso",
+            dados: pets
         });
     } catch (error) {
         console.error(error);
             res.status(500).send({
             ok: false,
-            messagem: "Erro ao excluir pet"
+            messagem: error.toString()
         });
     }
 })
