@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { pets } from './pets.js'
 import { randomUUID } from 'crypto';
-import { validarPet } from './middlewares.js';
+import { validarCampoPet } from './middlewares.js';
 const routes = Router();
 
 // GET /pets - Listar pets
@@ -22,7 +22,7 @@ routes.get('/pets', (req, res) => {
 })
 
 // POST /pets - Criar um pet
-routes.post('/pets', [validarPet], (req, res) => {
+routes.post('/pets', [validarCampoPet], (req, res) => {
     try {
         // 1- Entrada de dados
         const { nome, raca, idade, nomeTutor} = req.body;
@@ -86,7 +86,7 @@ routes.get('/pets/:id', (req, res) => {
 })
 
 //PUT /pets/:id - Atualizar um pet por ID
-routes.put('/pets/:id', [validarPet], (req, res) => {
+routes.put('/pets/:id', [validarCampoPet], (req, res) => {
     try {
         const { id } = req.params;
         const {nome, raca, idade, nomeTutor} = req.body;
